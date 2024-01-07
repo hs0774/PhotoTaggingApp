@@ -1,26 +1,26 @@
 import React from "react";
-// import { useState,useEffect } from "react";
+import { useState,useEffect } from "react";
 // import { Link } from "react-router-dom";
 
 const Home:React.FC = () => {
 
     // const [gameLinks,setGameLinks] = useState([]); 
     // const [scoreBoard,setScoreBoard] = useState([]);
-    //const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-    // useEffect(() => { //set homepage with maps and scores for each map.
-    //     fetch('http://localhost:5000/api/v1')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         setGameLinks(data.games)
-    //         setScoreBoard(data.scoreBoard);
-    //         setLoading(false);
-    //     })
-    // },[]);
+    useEffect(() => { //set homepage with maps and scores for each map.
+        fetch('http://localhost:5000/api/v1')
+        .then(response => response.json())
+        .then(data => {
+            // setGameLinks(data.games)
+            // setScoreBoard(data.scoreBoard);
+            setLoading(false);
+        })
+    },[]);
 
-    // if (loading) {
-    //     return <p>Loading...</p>; // Display a loading indicator while fetching data
-    // }
+    if (loading) {
+        return <p>Loading...</p>; // Display a loading indicator while fetching data
+    }
 
     return (
         <div className="homeContainer" data-testid="home">

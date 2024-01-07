@@ -1,0 +1,36 @@
+.img-container {
+    position: relative;
+  }
+  
+  .magnifier-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .magnifier-img {
+    width: 100%;
+    height: 100%;
+    object-fit: 'cover';
+    display: block; /* Ensures the image doesn't have extra space at the bottom */
+  }
+  
+  .focus {
+    position: absolute;
+    border: 2px solid #fff; /* Example border */
+    border-radius: 50%; /* Make it circular */
+    background-color: rgba(0, 0, 0, 0.5);  
+    pointer-events: none; /* Allows clicks to pass through the div */
+    z-index: 1; /* Ensures it's above the image */
+    transition: transform 0.2s ease;
+  }
+  
+  .options:hover{
+    background-color: aquamarine;
+    cursor: pointer;
+  }
+
+  .hidden{
+    display: none;
+  }

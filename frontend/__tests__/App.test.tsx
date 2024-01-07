@@ -60,5 +60,4 @@ test('phototag link returns to homepage + nav', () => {
     expect(navbarElement).toBeInTheDocument();
     const homeElement = getByTestId('home')
     expect(homeElement).toBeInTheDocument();
-  
 });
