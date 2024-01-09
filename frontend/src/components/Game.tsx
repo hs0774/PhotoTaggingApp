@@ -49,16 +49,6 @@ const Game: React.FC = () => {
             ...obj,
             coordinates:obj.coordinates.map((coord,index) => coord * scalingFactors[index]),
         }))
-        // const scaledCoords = coords.map((obj) => {
-        //     const existingObj = coords.find((coordObj) => coordObj.name === obj.name);
-        //     if (existingObj) {
-        //       return {
-        //         ...existingObj,
-        //         coordinates: obj.coordinates.map((coord, index) => coord * scalingFactors[index]),
-        //       };
-        //     }
-        //     return obj;
-        // });
         console.log(scaledCoords)
         setScaledCoords(scaledCoords);
       }
@@ -74,30 +64,42 @@ const Game: React.FC = () => {
         window.addEventListener('resize', handleResize);
       };
     }
-    
-    //updateImageDimensions();
+    const handleClickOutside = (event) => {
+        if (hiddenModal && imageRef.current && !imageRef.current.contains(event.target) && event.target.tagName !== 'AREA') {
+            console.log(event.target.tagName)
+          // Click occurred outside the image area, close the modal
+          setHiddenModal(false);
+        }
+        console.log(event.target);
+      };
+    if (hiddenModal) {
+        document.addEventListener('click', handleClickOutside);
+      } else {
+        document.removeEventListener('click', handleClickOutside);
+    }
+
     console.log(count);
     checkwinnner();
     return () => {
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('click', handleClickOutside);
     };
-  }, [count]);
+  }, [count,hiddenModal]);
 
   const handleClick = (e,obj) => {
 
     const target = e.target as HTMLImageElement;
     const boundingRect = target.getBoundingClientRect();
+
     const xClick = e.clientX - boundingRect.left;
     const yClick = e.clientY - boundingRect.top;
-    // console.log(e.clientX, e.clientY, x, y);
-   // console.log(e,obj);
-    // const x = e.clientX;
-    // const y = e.clientY;
+
     const imageWidth = imageRef.current?.clientWidth;
     const imageHeight = imageRef.current?.clientHeight;
     console.log(imageWidth,imageHeight,xClick,yClick)
 
     let x,y;
+
     if(xClick < imageWidth/2){
         x = e.clientX + window.scrollX+46;
     } else {
@@ -110,28 +112,9 @@ const Game: React.FC = () => {
         y = e.clientY + window.scrollY-60;
     }
 
-    //left
-    // const x = e.clientX + window.scrollX-181; // Adjust for horizontal scroll
-    // const y = e.clientY + window.scrollY-140;
-    //right
-    // const x = e.clientX + window.scrollX+46; // Adjust for horizontal scroll
-    // const y = e.clientY + window.scrollY-140;
-    //up
-    // const x = e.clientX + window.scrollX-70; // Adjust for horizontal scroll
-    // const y = e.clientY + window.scrollY-248;
-    //down
-    // const x = e.clientX + window.scrollX-68; // Adjust for horizontal scroll
-    // const y = e.clientY + window.scrollY-33;
-
     setClickedName(obj?.name || '');
-  
     setModalPosition({ x, y });
-    //console.log(obj.name)
     setHiddenModal(true);
-    // handleClick2(obj);
-    // console.log(e);
-    // console.log(coords[0].coordinates,coords[1].coordinates,coords[2].coordinates);
-    
   };
 
   const handleClick2 = (clickedObj) => {
@@ -150,12 +133,7 @@ const Game: React.FC = () => {
     setClickedCoords(updatedCoords);
     // checkwinnner();
     setHiddenModal(false);
-   // setHiddenModal(false);
-    
-    // setTimeout(() => {
-    //     console.log(updatedCoords); // Log the updated state after a delay
-    //   }, 3000);
-    // console.log(clickedCoords[0].coordinates,clickedCoords[1].coordinates,clickedCoords[2].coordinates);    
+
 
 }
 
@@ -190,7 +168,8 @@ const Game: React.FC = () => {
           src={trialpic}
           alt='trialpic'
           useMap='#workmap'
-          onClick={handleClick}
+          onClick={(e)=>handleClick(e,null)}
+          data-testid="game-image"
         />
         <map name='workmap'>
           {scaledCoords.map((obj) => (
@@ -199,6 +178,7 @@ const Game: React.FC = () => {
               shape='circle'
               coords={obj.coordinates.join(',')}
               onClick={(e)=>handleClick(e,obj)}
+              data-testid={`map-area-${obj.name}`}
             />
           ))}
         </map>
@@ -212,7 +192,7 @@ const Game: React.FC = () => {
           }}
         ></div>
       </div>
-      {hiddenModal && <div className='characters' style={{
+      {hiddenModal && <div className='characters' data-testid='modal-content' style={{
             position: 'absolute',
             top: modalPosition.y,
             left: modalPosition.x,
@@ -220,7 +200,8 @@ const Game: React.FC = () => {
             padding: '10px',
             backgroundColor: 'white',
             zIndex: 999,
-          }}>
+          }}
+          >
         <ul >
             {clickedCoords.map((obj) => (
                obj.clicked ? null : <li className='options' onClick={()=>handleClick2(obj.name)}  key={obj.name}>{obj.name}</li>
@@ -232,3 +213,17 @@ const Game: React.FC = () => {
 };
 
 export default Game;
+
+
+    //left
+    // const x = e.clientX + window.scrollX-181; // Adjust for horizontal scroll
+    // const y = e.clientY + window.scrollY-140;
+    //right
+    // const x = e.clientX + window.scrollX+46; // Adjust for horizontal scroll
+    // const y = e.clientY + window.scrollY-140;
+    //up
+    // const x = e.clientX + window.scrollX-70; // Adjust for horizontal scroll
+    // const y = e.clientY + window.scrollY-248;
+    //down
+    // const x = e.clientX + window.scrollX-68; // Adjust for horizontal scroll
+    // const y = e.clientY + window.scrollY-33;
