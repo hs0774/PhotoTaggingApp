@@ -1,7 +1,9 @@
 import "dotenv/config"
-import express,{Request,Response} from "express";
+import express from "express";
 import cors from "cors";
-
+import logger from "morgan"
+import cookieParser from "cookie-parser";
+import api from './routes/api'
 
 const app = express();
 
@@ -10,8 +12,11 @@ app.use(cors({
     credentials:true,
 }))
 
-app.get("/", (req:Request,res:Response) => {
-    res.json("yooo");
-});
+app.use(logger('dev'))
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use('/api/v1',api);
+
 
 export default app;

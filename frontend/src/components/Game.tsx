@@ -1,95 +1,134 @@
 import React, { useRef, useEffect,useState } from 'react';
-import trialpic from '../../public/images/trialpic.jpg'
+import { useLocation,useParams,useNavigate } from 'react-router-dom';
+import { useAuth } from '../pages/AuthContext';
 import '../../public/css/Game.css'
 
-const obj = [
-    {
-    name:'Tarzan',
-    coordinates: [309,223,34],
-    clicked:false,
-    },
-    {
-    name:'Tigger',
-    coordinates: [409,323,34],
-    clicked:false,
-    },
-    {
-    name:'Chien-Po',
-    coordinates: [209,123,34],
-    clicked:false,
-    },
-]
-
 const Game: React.FC = () => {
-    const [originalCoords] = useState(obj);
-    const [scaledCoords, setScaledCoords] = useState([...obj]);
-    const [clickedCoords, setClickedCoords] = useState([...obj]);
+    const {state} = useLocation();
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const {token,user,userCreated,minutes,seconds,setMinutes,setSeconds,setOnGamePage,setTimeStart} = useAuth();
+ // console.log('state',state.game)
+    const [originalCoords] = useState(state.game.characters);
+    const [scaledCoords, setScaledCoords] = useState([...state.game.characters]);
+    const [clickedCoords, setClickedCoords] = useState([...state.game.characters]);
     const [hiddenModal,setHiddenModal] = useState(false);
+    const [hiddenModal2,setHiddenModal2]= useState(false);
     const [clickedName,setClickedName] = useState('');
     const [count,setCount] = useState(0);
     const imageRef = useRef<HTMLImageElement>(null);
     const [position, setPosition] = useState({ left: 0, top: 0 });
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
-    const circleSize = 100; 
-
-  useEffect(() => {
-     
-    const updateImageDimensions = () => {
-      if (imageRef.current) {
-        console.log(imageRef.current.naturalWidth);
-        console.log(imageRef.current.naturalHeight);
-        console.log('Image width:', imageRef.current.clientWidth);
-        console.log('Image height:', imageRef.current.clientHeight);
-        const widthScaleFactor = imageRef.current.clientWidth/imageRef.current.naturalWidth;
-        const heightScaleFactor = imageRef.current.clientHeight/imageRef.current.naturalHeight;
-        const radiusScaleFactor = Math.sqrt(widthScaleFactor*heightScaleFactor);
-        const scalingFactors = [widthScaleFactor, heightScaleFactor, radiusScaleFactor];
-       // console.log(originalCoords);
-        const scaledCoords = originalCoords.map((obj) => ({
-            ...obj,
-            coordinates:obj.coordinates.map((coord,index) => coord * scalingFactors[index]),
-        }))
-        console.log(scaledCoords)
-        setScaledCoords(scaledCoords);
+    // const [minutes, setMinutes] = useState(0);
+    // const [seconds, setSeconds] = useState(0);
+    const [isGameWon, setIsGameWon] = useState(false);
+    const [formData,setFormData] = useState({
+        username: user?.token ? user?.username : '',
+        time:'',
+        gameId:id,
+    });
+    const [apiCallMade, setApiCallMade] = useState(false);
+    const [starttt,setStarttt]=useState(0);
+    const circleSize = 100;
+   // const {state} = useLocation();
+    useEffect(() => {
+      const startTimer = async () => {
+        try{
+          const response = await fetch('http://localhost:5000/api/v1/game/startTime', {
+            method:'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({start:Date.now()}),
+          });
+          
+          if(response.ok) {
+            const message = await response.json();
+            console.log(message);
+            setApiCallMade(true);
+            setStarttt(message.start);
+            setOnGamePage(true);
+            setTimeStart(true);
+          } else {
+            console.error('failed to start timer')
+          }
+        } catch(error){
+          console.error('failed to start timer:', error);
+        }
+      }  
+      if (!apiCallMade) {
+        startTimer();
       }
-    };
+      const updateImageDimensions = () => {
+        if (imageRef.current) {
+          console.log('natural width',imageRef.current.naturalWidth);
+          console.log('natural height',imageRef.current.naturalHeight);
+          console.log('Image width:', imageRef.current.clientWidth);
+          console.log('Image height:', imageRef.current.clientHeight);
+          const widthScaleFactor = imageRef.current.clientWidth/imageRef.current.naturalWidth;
+          const heightScaleFactor = imageRef.current.clientHeight/imageRef.current.naturalHeight;
+          const radiusScaleFactor = Math.sqrt(widthScaleFactor*heightScaleFactor);
+          const scalingFactors = [widthScaleFactor, heightScaleFactor, radiusScaleFactor];
+          console.log('original coords',originalCoords);
+          const scaledCoords = originalCoords.map((obj) => ({
+              ...obj,
+              coords:obj.coords.map((coord,index) => coord * scalingFactors[index]),
+          }))
+          console.log('scaled coords',scaledCoords)
+          setScaledCoords(scaledCoords);
+        }
+      };
 
-    const handleResize = () => {
-      updateImageDimensions();
-    };
+      const handleResize = () => {
+        console.log('Resize event detected');
+        updateImageDimensions();
+      };
 
     if (imageRef.current) {
-      imageRef.current.onload = () => {
-        updateImageDimensions(); // Log dimensions after image is loaded
-        window.addEventListener('resize', handleResize);
-      };
+      updateImageDimensions();
+      window.addEventListener('resize', handleResize);
     }
     const handleClickOutside = (event) => {
         if (hiddenModal && imageRef.current && !imageRef.current.contains(event.target) && event.target.tagName !== 'AREA') {
             console.log(event.target.tagName)
-          // Click occurred outside the image area, close the modal
-          setHiddenModal(false);
+            setHiddenModal(false);
         }
         console.log(event.target);
-      };
+    };
     if (hiddenModal) {
         document.addEventListener('click', handleClickOutside);
       } else {
         document.removeEventListener('click', handleClickOutside);
     }
+    // let interval;
 
-    console.log(count);
+    // const updateTimer = () => {
+    //   setSeconds((prevSeconds) => {
+    //     const newSeconds = prevSeconds + 1;
+    //     if (newSeconds === 60) {
+    //       setMinutes((prevMinutes) => prevMinutes + 1);
+    //       return 0;
+    //     }
+    //     return newSeconds;
+    //   });
+    // };
+  
+    // if (!isGameWon) {
+    //   interval = setInterval(updateTimer, 1000);
+    // }
+
     checkwinnner();
+
     return () => {
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('click', handleClickOutside);
+      // clearInterval(interval);
     };
-  }, [count,hiddenModal]);
+  }, [apiCallMade,count,hiddenModal,isGameWon,originalCoords]);
 
   const handleClick = (e,obj) => {
-
-    const target = e.target as HTMLImageElement;
-    const boundingRect = target.getBoundingClientRect();
+   //   const target = e.target as HTMLImageElement;
+    const boundingRect = imageRef.current.getBoundingClientRect();
 
     const xClick = e.clientX - boundingRect.left;
     const yClick = e.clientY - boundingRect.top;
@@ -97,7 +136,7 @@ const Game: React.FC = () => {
     const imageWidth = imageRef.current?.clientWidth;
     const imageHeight = imageRef.current?.clientHeight;
     console.log(imageWidth,imageHeight,xClick,yClick)
-
+    //console.log(e.clientX,e.clientY+90,scaledCoords)
     let x,y;
 
     if(xClick < imageWidth/2){
@@ -120,7 +159,7 @@ const Game: React.FC = () => {
   const handleClick2 = (clickedObj) => {
     console.log(clickedName);
     console.log(clickedObj);
-    console.log(clickedCoords);
+    console.log('clicked coords',clickedCoords);
     const updatedCoords = clickedCoords.map((obj) => {
         if(obj.name === clickedName && obj.name===clickedObj){
             setCount(count => count+1)
@@ -128,21 +167,74 @@ const Game: React.FC = () => {
         }
         return obj;
     })
-    console.log(updatedCoords);
+    console.log("updated coords",updatedCoords);
 
     setClickedCoords(updatedCoords);
-    // checkwinnner();
+     //checkwinnner();
     setHiddenModal(false);
 
 
 }
-
-  const checkwinnner = () => {
-   if (count === obj.length){
-    console.log('winner')
+const EndTimer = async () => {
+   const endTime = Date.now()
+    try{
+      const response = await fetch('http://localhost:5000/api/v1/game/endTime', {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({endTime})
+      });
+      if(response.ok) {
+        const {elapsedTime} = await response.json();
+        console.log(elapsedTime);
+        const backEndminutes = Math.floor(elapsedTime / 60000); 
+        const BackEndseconds = Math.floor((elapsedTime % 60000) / 1000);
+        //setMinutes(backEndminutes)
+        if(seconds >= BackEndseconds || minutes >= backEndminutes) {
+          setSeconds(seconds);
+          setMinutes(backEndminutes)
+            setFormData((prevData) => ({
+              ...prevData,
+              time:`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`,
+          }));
+        }
+      } else {
+        console.error('failed to end timer')
+      }
+    } catch(error){
+      console.error('failed to end timer:', error);
+    } 
+}
+  const checkwinnner = async () => {
+   if (count === state.game.characters.length){
+      await EndTimer();
+      setTimeStart(false);
+      setIsGameWon(true);
+      const token = localStorage.getItem('token')
+      if(!token) {
+        setHiddenModal2(true);
+      } else {
+        try {
+          const response = await fetch('http://localhost:5000/api/v1/game/addOrUpdateTime', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/JSON',
+            },
+            body: JSON.stringify({formData})
+          })
+          if(response.ok) {
+            console.log('response ok')
+            navigate('/api/v1')
+          } else {
+            console.error('Error adding or updating time:', response.status, response.statusText);
+          }
+        } catch (error){
+          console.error('Fetch error:', error);
+        }
+      }
    }
   }
-  
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = imageRef.current?.getBoundingClientRect();
     if (rect) {
@@ -153,8 +245,42 @@ const Game: React.FC = () => {
     }
   };
   
+   const handleChange = (e) => {
+      const { name,value} = e.target;
+      setFormData((prevData) => ({
+          ...prevData,
+          [name]:value,
+      }));
+   }
 
-  
+   const handleSubmit = async (e) => {
+     e.preventDefault();
+     try {
+      const response = await fetch('http://localhost:5000/api/v1/game/createUser', {
+        method:'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({formData}),
+        });
+        if(response.ok) {
+          console.log('response ok')
+          const {token,username} = await response.json();
+          console.log(username);
+          localStorage.setItem('token', token);
+          localStorage.setItem('username',username);
+          userCreated({token,username})
+          navigate('/api/v1')
+        }
+     } catch (error) {
+      console.error('response not ok ' + error)
+     }
+   }
+
+   const onClose = (e) => {
+    setHiddenModal2(false);
+   }
+
   return (
     <div className='img-container'>
       <div
@@ -165,7 +291,7 @@ const Game: React.FC = () => {
         <img
           ref={imageRef}
           className='magnifier-img'
-          src={trialpic}
+          src={state.game.picture}
           alt='trialpic'
           useMap='#workmap'
           onClick={(e)=>handleClick(e,null)}
@@ -176,7 +302,7 @@ const Game: React.FC = () => {
             <area
               key={obj.name}
               shape='circle'
-              coords={obj.coordinates.join(',')}
+              coords={obj.coords.join(',')}
               onClick={(e)=>handleClick(e,obj)}
               data-testid={`map-area-${obj.name}`}
             />
@@ -191,7 +317,7 @@ const Game: React.FC = () => {
             height: `${circleSize}px`,
           }}
         ></div>
-      </div>
+      </div> {/*make modal on a sep module */}
       {hiddenModal && <div className='characters' data-testid='modal-content' style={{
             position: 'absolute',
             top: modalPosition.y,
@@ -202,12 +328,36 @@ const Game: React.FC = () => {
             zIndex: 999,
           }}
           >
-        <ul >
+        {/* <ul > */}
             {clickedCoords.map((obj) => (
                obj.clicked ? null : <li className='options' onClick={()=>handleClick2(obj.name)}  key={obj.name}>{obj.name}</li>
             ))}
-        </ul>
+        {/* </ul> */}
       </div>}
+      {/* <p>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</p> */}
+      {hiddenModal2 && <div className='winnerModal' data-testid='winner-content' style = {{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'rgba(0, 0, 0, 0.5)',
+        }}>
+        <p>Enter your name to save your score</p>
+        <form style = {{background:'white'}} onSubmit={(e) => handleSubmit(e)}>
+        <button className="close-button" onClick={onClose}>
+          &times;
+        </button>
+            <label htmlFor="score">Name:
+            <input type="text" name= "username" value={formData.username} onChange={(e) => handleChange(e)} /></label>
+            <p>Your Time: {formData.time}</p>
+            <button type="submit">Submit</button>
+        </form>
+        </div>
+    }
     </div>
   );
 };

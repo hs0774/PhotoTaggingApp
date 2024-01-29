@@ -26,9 +26,13 @@
     transition: transform 0.2s ease;
   }
   
+  .options{
+    list-style: none;
+  }
   .options:hover{
     background-color: aquamarine;
     cursor: pointer;
+
   }
 
   .hidden{

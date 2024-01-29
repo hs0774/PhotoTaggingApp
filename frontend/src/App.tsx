@@ -20,7 +20,7 @@ function App() {
               />   
               <Route
                 path='/api/v1/game/:id'
-                element={<Game/>}
+                element= {<Game/>}
               />  
           </Routes>
         </div>

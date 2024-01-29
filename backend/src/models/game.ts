@@ -13,9 +13,16 @@ const GameSchema:Schema<IGame> = new Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Character',
         }
-      ]
+      ],
 })
 
-const Game: Model<IGame> = mongoose.model('Game',GameSchema);
+GameSchema.virtual("url").get(function(this:IGame){
+    return `/api/v1/game/${this._id}`
+})
+
+const Game: Model<IGame> = mongoose.model<IGame>('Game',GameSchema);
 
 export default Game;
+
+
+
