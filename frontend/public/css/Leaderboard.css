@@ -1,0 +1,48 @@
+.leaderboard-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch; /* Stretch items vertically */
+    margin-top: 20px; /* Add margin for spacing */
+    height: 100%; /* Ensure the container takes full height */
+  }
+  .game-container {
+    background-color: #35424a; /* Background color for each game container */
+    border: 1px solid #ddd; /* Add border for a subtle separation */
+    border-radius: 8px; /* Add border radius for rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+    margin-bottom: 20px; /* Add margin at the bottom of each game container */
+    padding: 20px; /* Add padding for spacing */
+    width: 300px; /* Set the width to your desired size */
+  }
+  
+  .game-container h2 {
+    color: whitesmoke; /* Color for game names */
+    margin: 15px 0; /* Add margin for spacing */
+    text-align: center;
+  }
+  
+  .scoreItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0; /* Background color for each score item */
+    padding: 15px; /* Add padding for spacing */
+    margin-bottom: 10px; /* Add margin at the bottom of each score item */
+    border-radius: 5px; /* Add border radius for rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+  }
+  
+  .scoreItem h3 {
+    margin: 0; /* Remove margin for the username */
+    color:d#35424a;
+  }
+  
+  .scoreItem p {
+    margin: 0; /* Remove margin for the score */
+    font-weight: bold; /* Make the score text bold */
+
+  }
+  
+  .scoreItem h3.highlighted {
+    color: blue;
+  }

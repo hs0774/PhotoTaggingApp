@@ -8,12 +8,12 @@ import Character from "../models/character";
 
 export const index: RequestHandler = async (req, res) => {
     try {
-        const [game, user,character] = await Promise.all([
+        const [game,character] = await Promise.all([
             Game.find().populate('characters').exec(),
-            User.find().exec(),
             Character.find().exec(),
         ]);
         const gamesData = game.map((games) => {
+
             const imageBuffer = Buffer.from(games.picture.buffer);
             const base64Image = imageBuffer.toString('base64');
             const imageDataURL = `data:image/jpeg;base64,${base64Image}`;
@@ -25,7 +25,9 @@ export const index: RequestHandler = async (req, res) => {
                 characters:games.characters,
             };
         });
-        res.status(200).json({ game: gamesData, user });
+
+        res.status(200).json({ game: gamesData });
+        
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, error: 'Internal Server Error' });

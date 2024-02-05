@@ -1,14 +1,14 @@
 import React,{useEffect,useState} from "react";
 import { Link } from 'react-router-dom';
 import { useAuth } from "../pages/AuthContext";
+import leaderboardsvg from '../../public/images/logos/leaderboard.svg'
+import homesvg from '../../public/images/logos/home.svg'
 import '../../public/css/Navbar.css'
 
 const Navbar:React.FC = () => {
     
-    // const [minutes, setMinutes] = useState(0);
-    // const [seconds, setSeconds] = useState(0);
-    const {minutes,seconds,setMinutes,setSeconds,onGamePage,timeStart,user,setUser,username} = useAuth();
-    //console.log(username,token)
+    const {minutes,seconds,setMinutes,setSeconds,setOnGamePage,onGamePage,timeStart,user,setUser,username} = useAuth() || {};
+
     useEffect(() => {
       let interval;
       const updateTimer = () => {
@@ -30,7 +30,7 @@ const Navbar:React.FC = () => {
         setSeconds(0)
      }
      const handleStorageChange = () => {
-        const storedName = localStorage.getItem('username'); // Replace 'userName' with your key
+        const storedName = localStorage.getItem('username');
   
         // Update state if the token is deleted
         setUser((prev) => ({
@@ -59,9 +59,14 @@ const Navbar:React.FC = () => {
             </Link>
         </div>
         <div className='right'>
-        {onGamePage ? <p>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</p> : null}
-            {/* <p>Hello,user</p> */}
-            {user?.username ? <p>Hello, {user?.username}</p> : null}
+        <Link to='/api/v1/'>    
+        <img className='svg svg2' data-testid='svg'src={homesvg}/>
+        </Link>
+        <Link to='/api/v1/scores'>    
+        <img className='svg'data-testid='svg2' src={leaderboardsvg}/>
+        </Link>
+        {onGamePage ? <p data-testid='timer'>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</p> : null}
+        {user?.username ? <p data-testid='userCreated'>Hello, {user?.username}</p> : null}
         </div>
      </header>
     )

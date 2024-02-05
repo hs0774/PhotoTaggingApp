@@ -5,8 +5,6 @@ import asyncHandler from "express-async-handler"
 import {body, validationResult} from "express-validator"
 import jwt from "jsonwebtoken"
 import User from '../models/user';
-// import Game from '../models/game';
-// import Character from "../models/character";
 
 const createToken = (username: string) => {
     return jwt.sign({username:username},env.SECRET)
@@ -109,17 +107,5 @@ export const addOrUpdateTime: RequestHandler = (async (req,res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 })
-
-//ok so now a cookie is passed to the frontend, it has a username and the cookie, 
-//next we update the nav with the users name
-// then before every game is finished we check if the cookie is there
-// if yes we create another route which i guess will check token, gameid and username,
-//also that user skips the submit score modal,
-
-
-
-// if that game exists update score else just add the score array 
-
-//we then create an algo for names that were submitted 
 
 

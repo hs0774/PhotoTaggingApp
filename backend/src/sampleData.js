@@ -38,22 +38,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // #! /usr/bin/env node
 require("dotenv/config");
-// var validateEnv_1 = require("./util/validateEnv");
-import validateEnv_1 from "./util/validateEnv"
-import mongoose_1 from "mongoose";
-import fs from "fs";
-import game_1 from "./models/game";
-import character_1 from "./models/character";
-import user_1 from "./models/user";
-
-// var mongoose_1 = require("mongoose");
-// var fs = require("fs");
-// var game_1 = require("./models/game");
-// var character_1 = require("./models/character");
-// var user_1 = require("./models/user");
+var validateEnv_1 = require("./util/validateEnv");
+var mongoose_1 = require("mongoose");
+var fs = require("fs");
+var game_1 = require("./models/game");
+var character_1 = require("./models/character");
+var user_1 = require("./models/user");
 console.log('This script populates some test items to your database');
-// Get arguments passed on command line
-//const userArgs = process.argv.slice(2);  
 var gamesArr = [];
 var charactersArr = [];
 var usersArr = [];
@@ -91,7 +82,7 @@ function gameCreate(index, gameName, picture, characters) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2,  3]);
+                    _a.trys.push([0, 2, , 3]);
                     gameDetail = {
                         gameName: gameName,
                         picture: picture,
@@ -119,7 +110,7 @@ function characterCreate(index, name, coords) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2,  3]);
+                    _a.trys.push([0, 2, , 3]);
                     characterDetail = {
                         name: name,
                         coords: coords,
@@ -146,7 +137,7 @@ function userCreate(index, username, gameScores) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2,  3]);
+                    _a.trys.push([0, 2, , 3]);
                     userDetail = {
                         username: username,
                         gameScores: gameScores,
@@ -199,7 +190,7 @@ function createCharacters() {
                             characterCreate(4, 'Teddy', [858, 223, 34]),
                             characterCreate(5, 'Clock', [108, 544, 34]),
                             characterCreate(6, 'Book', [275, 832, 34]),
-                            characterCreate(7, 'Well', [974, 579, 34]),
+                            characterCreate(7, 'Well', [974, 579, 50]),
                             characterCreate(8, 'Suitcase', [678, 201, 34]),
                             characterCreate(9, 'Spray', [845, 904, 34]),
                             characterCreate(10, 'Treasure Chest', [1012, 912, 34]),
@@ -219,11 +210,11 @@ function createUsers() {
                 case 0:
                     console.log("Adding users");
                     return [4 /*yield*/, Promise.all([
-                            userCreate(0, 'Jim', [{ gameId: gamesArr[0], score: '0:24' }]), //these three played one 
-                            userCreate(1, 'Bob', [{ gameId: gamesArr[1], score: '0:44' }]),
-                            userCreate(2, 'Bill', [{ gameId: gamesArr[2], score: '0:58' }]),
-                            userCreate(3, 'Will', [{ gameId: gamesArr[0], score: '0:24' }, { gameId: gamesArr[2], score: '0:35' }]), //played 2
-                            userCreate(4, 'Anon', [{ gameId: gamesArr[0], score: '0:24' }, { gameId: gamesArr[1], score: '0:58' }, { gameId: gamesArr[2], score: '0:44' }]), //played all 3   
+                            userCreate(0, 'Jim', [{ gameId: gamesArr[0], score: '00:24' }]), //these three played one 
+                            userCreate(1, 'Bob', [{ gameId: gamesArr[1], score: '00:44' }]),
+                            userCreate(2, 'Bill', [{ gameId: gamesArr[2], score: '00:58' }]),
+                            userCreate(3, 'Will', [{ gameId: gamesArr[0], score: '00:24' }, { gameId: gamesArr[2], score: '00:35' }]), //played 2
+                            userCreate(4, 'Anon', [{ gameId: gamesArr[0], score: '00:24' }, { gameId: gamesArr[1], score: '00:58' }, { gameId: gamesArr[2], score: '00:44' }]), //played all 3   
                         ])];
                 case 1:
                     _a.sent();

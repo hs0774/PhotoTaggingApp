@@ -1,0 +1,23 @@
+/* body {
+    margin:0;
+    padding:0;
+    background-color: #f4f4f4;   
+} */
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #333;  
+  }
+  
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .content {
+    flex: 1;
+  }
+  
