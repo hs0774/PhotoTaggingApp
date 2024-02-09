@@ -45,7 +45,7 @@ export const createUser = [
         .trim(),
     asyncHandler(async (req,res)=> {
         const errors = validationResult(req);
-        if (req.body.formData.username === ''){
+        if (!req.body.formData.username || req.body.formData.username === ''){
             req.body.formData.username = 'Anon'
         }
         const existingUser = await User.findOne({ username:req.body.formData.username });
@@ -107,5 +107,6 @@ export const addOrUpdateTime: RequestHandler = (async (req,res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 })
+
 
 

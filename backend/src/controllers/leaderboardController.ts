@@ -12,9 +12,6 @@ export const scores: RequestHandler = async (req, res) => {
         Game.find().select('_id gameName').exec(),
         User.find().exec(),
     ]) 
-    console.log(games)
-    //const gameIds = games.map(game => game._id.toString());
-
     res.status(200).json({ games: games,user });
         
     } catch (error) {

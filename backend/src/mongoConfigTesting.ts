@@ -1,14 +1,13 @@
+import 'dotenv/config';
+import env from './util/validateEnv'
 import mongoose from "mongoose";
 import {MongoMemoryServer} from "mongodb-memory-server";
 
 async function initializeMongoServer() {
     const mongoServer = await MongoMemoryServer.create();
-    const mongoUri = mongoServer.getUri();
+    const mongoUri = env.MONGODB_URI;
 
-    mongoose.connect(mongoUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
+    mongoose.connect(mongoUri);
 
     mongoose.connection.on("error", e => {
         if (e.message.code === "ETIMEDOUT") {
@@ -19,8 +18,9 @@ async function initializeMongoServer() {
     })
 
     mongoose.connection.once("open", () => {
-        console.log(`MongoDB successfully connected to ${mongoUri}`)
+        console.log(`MongoDB successfully connected `)
     })
 }
+
 
 export default initializeMongoServer;

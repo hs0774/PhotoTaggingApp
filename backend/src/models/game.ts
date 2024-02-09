@@ -1,5 +1,6 @@
 import mongoose, { Document,Model,Schema } from "mongoose";
 
+
 interface IGame extends Document {
     gameName:string;
     picture:Buffer;

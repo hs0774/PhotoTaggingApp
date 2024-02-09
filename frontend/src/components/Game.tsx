@@ -235,6 +235,7 @@ const Game: React.FC = () => {
 
     const handleSubmit = async (e) => {
      e.preventDefault();
+     console.log(formData);
      try {
       const response = await fetch('http://localhost:5000/api/v1/game/createUser', {
         method:'POST',
@@ -250,9 +251,8 @@ const Game: React.FC = () => {
           localStorage.setItem('token', token);
           localStorage.setItem('username',username);
           userCreated({token,username})
-          navigate('/api/v1')
+         // navigate('/api/v1')
         }
-
      } catch (error) {
       console.error('response not ok ' + error)
      }
