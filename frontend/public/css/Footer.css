@@ -1,13 +1,13 @@
 .footerContainer {
-    background-color: #35424a;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center content horizontally */
-    text-align: center; /* Center content vertically */
+  background-color: #35424a;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center content horizontally */
+  text-align: center; /* Center content vertically */
 }
 
 .footerimg {
-    max-width: 25px; /* Set the maximum width of the image */
-    height: auto; /* Maintain aspect ratio */
+  max-width: 25px; /* Set the maximum width of the image */
+  height: auto; /* Maintain aspect ratio */
 }
