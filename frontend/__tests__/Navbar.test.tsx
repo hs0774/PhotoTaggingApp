@@ -1,8 +1,7 @@
 import React from 'react';
-import { render,fireEvent,screen,act,waitFor } from '@testing-library/react';
+import { render} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import {AuthProvider,useAuth} from "../src/pages/AuthContext.tsx"
-import userEvent from '@testing-library/user-event';
+import {AuthProvider} from "../src/pages/AuthContext.tsx"
 import '@testing-library/jest-dom'
 import Navbar from '../src/components/Navbar';
 

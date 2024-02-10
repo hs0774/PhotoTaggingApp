@@ -1,7 +1,5 @@
 import 'dotenv/config';
-import env from "../util/validateEnv"
 import { RequestHandler } from "express";
-import asyncHandler from "express-async-handler"
 import User from '../models/user';
 import Game from '../models/game';
 

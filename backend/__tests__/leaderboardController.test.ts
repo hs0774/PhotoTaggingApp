@@ -1,7 +1,7 @@
-import api from '../../src/routes/api'
+import api from '../src/routes/api'
 import request from 'supertest';
 import express from "express";
-import initializeMongoServer from '../../src/mongoConfigTesting';
+import initializeMongoServer from '../src/mongoConfigTesting';
 import mongoose from 'mongoose'
 
 const app = express();

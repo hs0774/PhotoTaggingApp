@@ -1,10 +1,10 @@
 import React from 'react';
 import { render,fireEvent,screen,waitFor } from '@testing-library/react';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter} from 'react-router-dom';
 import {AuthProvider} from "../src/pages/AuthContext.tsx"
 import '@testing-library/jest-dom'
 import Game from '../src/components/Game';
-import Navbar from '../src/components/Navbar';
+
 
 
 const game = {
@@ -20,7 +20,8 @@ const game = {
 
 test('renders game component', ()=> {
 
-  const { getByText,getByTestId } =  render(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { getByTestId } =  render(
     <AuthProvider>
       <MemoryRouter initialEntries={[{state: { game } }]}>
         <Game />
@@ -50,7 +51,7 @@ test('clicking on a specific map area triggers the modal to open', () => {
 });
 
 test('modal does not open if user does not click on map area', () => {
-  const { getByTestId, queryByTestId } = render(
+  const { queryByTestId } = render(
     <AuthProvider>
       <MemoryRouter initialEntries={[{ state: { game } }]}>
         <Game />
@@ -64,7 +65,7 @@ test('modal does not open if user does not click on map area', () => {
 
   render(<div data-testid="some-non-map-element">This is a non-map element</div>);
   // Click on some other element (not a map area)
-  const nonMapElement = screen.getByTestId('some-non-map-element'); // replace with your actual non-map element
+  const nonMapElement = screen.getByTestId('some-non-map-element'); 
   fireEvent.click(nonMapElement);
 
   // Assert that the modal content is still not present
@@ -131,7 +132,7 @@ test('modal disappears when clicking outside', () => {
 
 
 test('modal does not have character after guessing the right character', () => {
-  const { getByTestId, queryByTestId } = render(
+  const { getByTestId} = render(
     <AuthProvider>
       <MemoryRouter initialEntries={[{ state: { game } }]}>
         <Game />

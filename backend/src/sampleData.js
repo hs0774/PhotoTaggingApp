@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -82,7 +83,7 @@ function gameCreate(index, gameName, picture, characters) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 2,3]);
                     gameDetail = {
                         gameName: gameName,
                         picture: picture,
@@ -110,7 +111,7 @@ function characterCreate(index, name, coords) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 2,3]);
                     characterDetail = {
                         name: name,
                         coords: coords,
@@ -137,7 +138,7 @@ function userCreate(index, username, gameScores) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 2, 3]);
                     userDetail = {
                         username: username,
                         gameScores: gameScores,

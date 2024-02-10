@@ -1,11 +1,11 @@
 import React from 'react';
 import { render,fireEvent,screen,waitFor} from '@testing-library/react';
-import { MemoryRouter,Route,Routes } from 'react-router-dom';
+import { MemoryRouter} from 'react-router-dom';
 import '@testing-library/jest-dom'
 import App from '../src/App';
-import Game from '../src/components/Game'
+
 import {AuthProvider} from "../src/pages/AuthContext.tsx"
-import testimg from "../public/images/spotTheChick.jpg"
+
 
 test('renders HOME component for /api/v1 route as well as NAVBAR and FOOTER', () => {
   const { getByTestId } = render(
@@ -103,7 +103,7 @@ const game = {
 };
 
 test('renders GAME component with NAVBAR and FOOTER and TIMER STARTED', async () => {
-  const { getByText,getByTestId } = render(
+  const { getByTestId } = render(
     <AuthProvider>
       <MemoryRouter initialEntries={[{ pathname: '/api/v1/game/65b804372f6941ce2cb099ef', state: { game } }]}>
         <App/>

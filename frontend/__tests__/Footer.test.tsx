@@ -1,6 +1,6 @@
 import React from 'react';
-import { render,fireEvent,screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { render } from '@testing-library/react';
+
 import '@testing-library/jest-dom'
 import Footer from '../src/components/Footer';
 

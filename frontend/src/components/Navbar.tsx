@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect} from "react";
 import { Link } from 'react-router-dom';
 import { useAuth } from "../pages/AuthContext";
 import leaderboardsvg from '../../public/images/logos/leaderboard.svg'
@@ -7,10 +7,10 @@ import '../../public/css/Navbar.css'
 
 const Navbar:React.FC = () => {
     
-    const {minutes,seconds,setMinutes,setSeconds,setOnGamePage,onGamePage,timeStart,user,setUser,username} = useAuth() || {};
+    const {minutes,seconds,setMinutes,setSeconds,onGamePage,timeStart,user,setUser} = useAuth() || {};
 
     useEffect(() => {
-      let interval;
+      let interval: string | number | NodeJS.Timeout | undefined;
       const updateTimer = () => {
       setSeconds((prevSeconds) => {
         const newSeconds = prevSeconds + 1;
@@ -21,7 +21,6 @@ const Navbar:React.FC = () => {
         return newSeconds;
         });
       };
-      console.log(minutes,seconds)
       if (onGamePage === true && timeStart === true) {
          interval = setInterval(updateTimer, 1000);
        }
@@ -30,14 +29,15 @@ const Navbar:React.FC = () => {
         setSeconds(0)
      }
      const handleStorageChange = () => {
-        const storedName = localStorage.getItem('username');
+      const storedName = localStorage.getItem('username');
+      const storedToken = localStorage.getItem('token');
   
-        // Update state if the token is deleted
-        setUser((prev) => ({
-            ...prev,
-            username: storedName || ''
-        }));
-      };
+      // Update state if the token is deleted
+      setUser({
+          username: storedName || '',
+          token: storedToken ? storedToken : null
+      });
+    };
   
       // Add event listener for changes in local storage
       window.addEventListener('storage', handleStorageChange);
@@ -49,7 +49,7 @@ const Navbar:React.FC = () => {
         clearInterval(interval);
         window.removeEventListener('storage', handleStorageChange);
       };
-    }, [onGamePage,timeStart]);
+    }, [onGamePage, setMinutes, setSeconds, setUser, timeStart]);
 
     return (
      <header data-testid="navbar" className="navbarContainer">
@@ -65,8 +65,10 @@ const Navbar:React.FC = () => {
         <Link to='/api/v1/scores'>    
         <img className='svg'data-testid='svg2' src={leaderboardsvg}/>
         </Link>
+        <div className="nameAndTimer">
         {onGamePage ? <p data-testid='timer'>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</p> : null}
         {user?.username ? <p data-testid='userCreated'>Hello, {user?.username}</p> : null}
+        </div>
         </div>
      </header>
     )

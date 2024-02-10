@@ -80,10 +80,8 @@ export const createUser = [
 ];
      
 export const addOrUpdateTime: RequestHandler = (async (req,res) => {
-    console.log(req.body);
     try {
         const user = await User.findOne({username:req.body.formData.username})
-        console.log(user);
         if (user && req.body.formData.time !== '') {
             const played =  user?.gameScores.findIndex(id => id.gameId.toString() === req.body.formData.gameId)
 

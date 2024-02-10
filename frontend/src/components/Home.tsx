@@ -4,9 +4,14 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../pages/AuthContext";
 import '../../public/css/Home.css'
 
+interface Game {
+    _id:string,
+    gameName:string,
+    picture:string;
+}
 const Home:React.FC = () => {
 
-    const [gameLinks,setGameLinks] = useState([]); 
+    const [gameLinks,setGameLinks] = useState<Game[]>([]); 
     const [loading, setLoading] = useState(true);
     const {setOnGamePage} = useAuth();
     useEffect(() => { //set homepage with maps and scores for each map.
@@ -14,13 +19,10 @@ const Home:React.FC = () => {
         fetch('http://localhost:5000/api/v1')
         .then(response => response.json())
         .then(data => {
-          //  console.log(data.user)
-           // console.log(data.game)
             setGameLinks(data.game)
-           // setScoreBoard(data.user);
             setLoading(false);
         })
-    },[]);
+    },[setOnGamePage]);
 
     if (loading) {
         return <p data-testid="home">Loading...</p>; // Display a loading indicator while fetching data

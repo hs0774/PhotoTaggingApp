@@ -1,13 +1,10 @@
 import { RequestHandler } from "express";
-import asyncHandler from "express-async-handler"
-import {body, validationResult} from "express-validator"
-import jwt from "jsonwebtoken"
-import User from '../models/user';
 import Game from '../models/game';
 import Character from "../models/character";
 
 export const index: RequestHandler = async (req, res) => {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [game,character] = await Promise.all([
             Game.find().populate('characters').exec(),
             Character.find().exec(),

@@ -2,9 +2,25 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../pages/AuthContext";
 import '../../public/css/Leaderboard.css';
 
+interface Game {
+  _id: string; // Assuming _id is of type string
+  gameName: string;
+}
+
+interface ScoreObject {
+  gameId: string;
+  score: string;
+  // Add other properties if needed
+}
+interface Score {
+  username: string;
+  gameScores: ScoreObject[];
+ // Add other properties if needed
+}
+
 const Leaderboard: React.FC = () => {
-  const [scoreBoard, setScoreBoard] = useState([]);
-  const [gameData, setGameData] = useState([]);
+  const [scoreBoard, setScoreBoard] = useState<Score[]>([]);
+  const [gameData, setGameData] = useState<Game[]>([]);
   const storedUsername = localStorage.getItem('username');
   const {setOnGamePage} = useAuth();
 
@@ -16,7 +32,7 @@ const Leaderboard: React.FC = () => {
         setScoreBoard(data.user);
         setGameData(data.games);
       });
-  }, []);
+  }, [setOnGamePage]);
 
   return (
     <div className="leaderboard-container" data-testid='leaderboard'>

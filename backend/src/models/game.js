@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 var mongoose_1 = require("mongoose");
+
 var GameSchema = new mongoose_1.Schema({
     gameName: { type: String, required: true },
     picture: { type: Buffer, required: true },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render,fireEvent,screen } from '@testing-library/react';
+import { render,screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom'
 import {AuthProvider} from "../src/pages/AuthContext.tsx"
@@ -8,7 +8,8 @@ import Leaderboard from "../src/components/Leaderboard"
 
 test('renders home component', ()=> {
 
-    const { getByText,getByTestId } =  render(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { getByTestId } =  render(
       <AuthProvider>
         <MemoryRouter initialEntries={['/api/v1/scores']}>
           <Leaderboard />

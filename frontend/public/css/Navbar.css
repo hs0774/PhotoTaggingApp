@@ -64,3 +64,8 @@
   .svg2{
     height:35px;
   }
+
+  .nameAndTimer{
+    display: flex;
+    gap:10px;
+  }

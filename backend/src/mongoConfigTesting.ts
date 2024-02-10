@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import {MongoMemoryServer} from "mongodb-memory-server";
 
 async function initializeMongoServer() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const mongoServer = await MongoMemoryServer.create();
     const mongoUri = env.MONGODB_URI;
 
