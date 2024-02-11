@@ -161,17 +161,16 @@ const Game: React.FC = () => {
     if (!boundingRect || !imageWidth || !imageHeight) {
       return;
     }
-    const xClick = e.clientX - boundingRect.left;
-    const yClick = e.clientY - boundingRect.top;
-
-    const xRatio = xClick / imageWidth;
-    const yRatio = yClick / imageHeight;
-
-    const xOffset = (xRatio < 0.5 ? 0.045 : -0.125) * imageWidth;
-    const yOffset = (yRatio < 0.5 ? -0.01 : -0.3) * imageHeight;
-
-    const x = e.clientX + window.scrollX + xOffset;
-    const y = e.clientY + window.scrollY + yOffset;
+    
+    
+    let x = e.clientX - boundingRect.left;
+    if(imageWidth/2 < x ) {
+           x = x-100;
+    }
+    let y = e.clientY - boundingRect.top;
+    if(imageHeight/2 < y ){
+      y = e.clientY - boundingRect.top-100;
+    }
 
     setClickedName(obj?.name || "");
     setModalPosition({ x, y });
