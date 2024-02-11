@@ -12,8 +12,8 @@ const app = express();
 
 app.use(cors({
     // origin:"*",
-    // origin:"http://localhost:5173",
-     origin:"https://photo-tagging-app-6rhb.vercel.app/api/v1",
+    // // origin:"http://localhost:5173",
+      origin:"https://photo-tagging-app-6rhb.vercel.app/api/v1",
     credentials:true,
 }))
 app.use(compression());
