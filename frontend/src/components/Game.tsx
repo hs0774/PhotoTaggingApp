@@ -193,7 +193,7 @@ const Game: React.FC = () => {
     const endTime = Date.now();
     try {
       const response = await fetch(
-        "https://photo-tagging-app-eta.vercel.app/api/v1/game/endTime",
+        "https://photo-tagging-app-pi.vercel.app/api/v1/game/endTime",
         {
           method: "POST",
           headers: {
@@ -236,7 +236,7 @@ const Game: React.FC = () => {
       } else {
         try {
           const response = await fetch(
-            "https://photo-tagging-app-eta.vercel.app/api/v1/game/addOrUpdateTime",
+            "https://photo-tagging-app-pi.vercel.app/api/v1/game/addOrUpdateTime",
             {
               method: "POST",
               headers: {
@@ -282,7 +282,7 @@ const Game: React.FC = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://photo-tagging-app-eta.vercel.app/api/v1/game/createUser",
+        "https://photo-tagging-app-pi.vercel.app/api/v1/game/createUser",
         {
           method: "POST",
           headers: {

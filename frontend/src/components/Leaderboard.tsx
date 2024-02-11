@@ -26,7 +26,7 @@ const Leaderboard: React.FC = () => {
 
   useEffect(() => {
     setOnGamePage(false);
-    fetch('https://photo-tagging-app-eta.vercel.app/api/v1/scores')
+    fetch('https://photo-tagging-app-pi.vercel.app/api/v1/scores')
       .then(resp => resp.json())
       .then(data => {
         setScoreBoard(data.user);

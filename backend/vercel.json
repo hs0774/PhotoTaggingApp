@@ -1,7 +1,7 @@
 {
     "version": 2,
     "builds": [
-        {"src": "backend/src/*.ts", "use": "@vercel/node"}
+        {"src": "backend/src/**/*.ts", "use": "@vercel/node"}
     ],
     "routes": [
         {
@@ -10,9 +10,10 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/backend/src/server.ts" 
+            "dest": "/backend/src/server.ts"
         }
     ]
 }
+
 
 

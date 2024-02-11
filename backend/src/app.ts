@@ -11,11 +11,10 @@ import RateLimit from "express-rate-limit";
 const app = express();
 
 app.use(cors({
-    // origin:"*",
-    // // origin:"http://localhost:5173",
-      origin:"https://photo-tagging-app-6rhb.vercel.app/api/v1",
-    credentials:true,
-}))
+    origin: "https://photo-tagging-app-6rhb.vercel.app",
+    credentials: true // If your frontend sends cookies or authorization headers
+  }));
+
 app.use(compression());
 app.use(
     helmet.contentSecurityPolicy({
@@ -37,5 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/api/v1',api);
 
-
+app.get('/', (req,res) => {
+    res.json('hi')
+})
 export default app;
