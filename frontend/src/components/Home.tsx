@@ -16,7 +16,7 @@ const Home:React.FC = () => {
     const {setOnGamePage} = useAuth();
     useEffect(() => { //set homepage with maps and scores for each map.
         setOnGamePage(false);
-        fetch('https://photo-tagging-app-pi.vercel.app/api/v1')
+        fetch('http://54.160.132.199:5000/api/v1')
         .then(response => response.json())
         .then(data => {
             setGameLinks(data.game)

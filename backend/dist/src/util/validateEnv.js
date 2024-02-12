@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const envalid_1 = require("envalid");

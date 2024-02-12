@@ -11,7 +11,7 @@ import RateLimit from "express-rate-limit";
 const app = express();
 
 app.use(cors({
-    origin: "https://photo-tagging-app-6rhb.vercel.app",
+    origin: "https://photo-tagging-app-6rhb.vercel.app/api/v1",
     credentials: true // If your frontend sends cookies or authorization headers
   }));
 
