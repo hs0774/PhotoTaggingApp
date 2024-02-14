@@ -16,7 +16,7 @@ const Home:React.FC = () => {
     const {setOnGamePage} = useAuth();
     useEffect(() => { //set homepage with maps and scores for each map.
         setOnGamePage(false);
-        fetch('http://54.160.132.199:5000/api/v1')
+        fetch('https://thephototag.com/api/v1')
         .then(response => response.json())
         .then(data => {
             setGameLinks(data.game)
@@ -47,25 +47,3 @@ const Home:React.FC = () => {
 }
 
 export default Home;
-
-
-{/* <h1>Leader Board</h1>
-                            {scoreBoard.filter((board)=> 
-                                board.gameScores.some(scoreObj => scoreObj.gameId === game._id)
-                            )
-                            .flatMap((listItem) =>
-                                listItem.gameScores
-                                .filter((scoreObj) => scoreObj.gameId === game._id)
-                                .map((scoreObj) => ({
-                                    username: listItem.username,
-                                    score:scoreObj.score
-                                }))
-                            )
-                            .sort((a, b) => a.score.localeCompare(b.score))
-                            .map((item) => (
-                                <div className="scoreItem" key={item.username}>
-                                <h3>{item.username}</h3>
-                                <p>{item.score}</p>
-                                </div>
-                            ))
-                            }     */}
