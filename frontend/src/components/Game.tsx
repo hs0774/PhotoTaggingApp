@@ -56,7 +56,7 @@ const Game: React.FC = () => {
     const startTimer = async () => {
       try {
         const response = await fetch(
-          "https://thephototag.com/api/v1/startTime",
+          "https://thephototag.com/api/v1/game/startTime",
           {
             method: "POST",
             headers: {
