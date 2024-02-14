@@ -6,6 +6,7 @@ import {body, validationResult} from "express-validator"
 import jwt from "jsonwebtoken"
 import User from '../models/user';
 
+
 const createToken = (username: string) => {
     return jwt.sign({username:username},env.SECRET)
 }

@@ -15,18 +15,18 @@ function App() {
           <Routes>
               <Route
                 path='/'
-                element={<Navigate to="/api/v1" />}
+                element={<Navigate to="/" />}
               />
               <Route
-                path='/api/v1'
+                path='/'
                 element={<Home/>}
               />   
               <Route
-                path='/api/v1/game/:id'
+                path='/game/:id'
                 element= {<Game/>}
               />  
               <Route
-                path='/api/v1/scores'
+                path='/scores'
                 element={<Leaderboard/>}
               />
           </Routes>
