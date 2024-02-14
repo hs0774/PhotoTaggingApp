@@ -34,7 +34,7 @@ const Home:React.FC = () => {
             <div className="gameContainer">
                 {gameLinks.map(game => (
                     <div className="gameItem" key={game._id}>
-                        <Link to={`/api/v1/game/${game._id}`} state={{ game }}>
+                        <Link to={`/game/${game._id}`} state={{ game }}>
                             <img src={game.picture} alt={game.gameName} />
                             <h2 className="centeredText">{game.gameName}</h2>
                         </Link>

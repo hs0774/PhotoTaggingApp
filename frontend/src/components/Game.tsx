@@ -246,7 +246,7 @@ const Game: React.FC = () => {
             }
           );
           if (response.ok) {
-            navigate("/api/v1/scores");
+            navigate("/scores");
           } else {
             console.error(
               "Error adding or updating time:",
@@ -296,7 +296,7 @@ const Game: React.FC = () => {
         localStorage.setItem("token", token);
         localStorage.setItem("username", username);
         userCreated({ token, username });
-        navigate("/api/v1/scores");
+        navigate("/scores");
       }
     } catch (error) {
       console.error("response not ok " + error);

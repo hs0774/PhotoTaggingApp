@@ -59,10 +59,10 @@ const Navbar:React.FC = () => {
             </Link>
         </div>
         <div className='right'>
-        <Link to='/api/v1/'>    
+        <Link to='/'>    
         <img className='svg svg2' data-testid='svg'src={homesvg}/>
         </Link>
-        <Link to='/api/v1/scores'>    
+        <Link to='/scores'>    
         <img className='svg'data-testid='svg2' src={leaderboardsvg}/>
         </Link>
         <div className="nameAndTimer">
